@@ -107,7 +107,7 @@ uv run hormigas
 Opciones:
 
 ```bash
-uv run hormigas --ants 48 --seed 7
+uv run hormigas --ants 36 --seed 7
 ```
 
 ### Controles rápidos (Hormigas)
