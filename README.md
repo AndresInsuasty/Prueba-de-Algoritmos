@@ -6,6 +6,7 @@ Repositorio de experimentos y demos de algoritmos en **Python**, con **Pygame** 
 
 1. [Sorting Race: carrera de ordenamientos](#sorting-race-carrera-de-ordenamientos)
 2. [Hormigas: feromonas y comida](#hormigas-feromonas-y-comida)
+3. [Laberinto de los vecinos: BFS vs DFS](#laberinto-de-los-vecinos-bfs-vs-dfs)
 
 ---
 
@@ -144,7 +145,70 @@ uv run python scripts/capture_readme_screenshots.py
 
 ---
 
+## Laberinto de los vecinos: BFS vs DFS
+
+Mismo laberinto en **dos paneles**: a la izquierda **BFS (anchura)** y a la derecha **DFS (profundidad)**. Las celdas **visitadas** y la **frontera** (cola vs pila) se pintan con colores distintos; el HUD muestra cuántas celdas llevó cada uno (idea de **memoria** / espacio) y si llegaron a la **meta** (salida). Podés **dibujar muros** con el ratón (clic izquierdo / derecho para borrar), generar un laberinto aleatorio o vaciar el interior, y dar **Play** cuando quieras comparar.
+
+Detalle y controles: [LaberintoVecinos/README.md](LaberintoVecinos/README.md).
+
+### Idea pedagógica (resumen)
+
+| Tema | BFS | DFS |
+|------|-----|-----|
+| Frontera | Cola: se expande en “olas” | Pila: se mete por un camino y retrocede |
+| Camino a la meta | **Más corto** (en pasos, grafo no ponderado) | **No garantizado** el más corto |
+| “Pintura” / visitados | Suele **marcar más** celdas hasta la meta | A menudo **menos** frontera abierta, pero el recorrido puede ser largo |
+
+### Cómo ejecutar (Laberinto)
+
+```bash
+cd LaberintoVecinos
+uv sync
+uv run laberinto-vecinos
+```
+
+Opción:
+
+```bash
+uv run laberinto-vecinos --seed 42
+```
+
+### Controles rápidos (Laberinto)
+
+| Acción | Dónde |
+|--------|--------|
+| Play / Pausar | Botón o **SPACE** |
+| Reiniciar solo la búsqueda | Botón (mantiene el laberinto) |
+| Laberinto aleatorio / vaciar interior | Botones (solo en **modo edición**) |
+| Velocidad | **− / +** en el HUD |
+| Pared | Clic izquierdo en celda (edición) |
+| Quitar pared | Clic derecho |
+| Salir | **ESC** |
+
+### Capturas (Laberinto)
+
+**Edición** — laberinto generado y panel listo para modificar o dar Play.
+
+![Edición y panel BFS vs DFS](docs/laberinto_vecinos/01-edicion.png)
+
+**En carrera** — ambas búsquedas avanzando; se nota la expansión ancha del BFS frente al trazo del DFS.
+
+![BFS vs DFS en marcha](docs/laberinto_vecinos/02-en-carrera.png)
+
+**Resultado** — meta alcanzada (o no) y camino resaltado cuando hay éxito.
+
+![Resultado BFS vs DFS](docs/laberinto_vecinos/03-resultado.png)
+
+### Regenerar capturas (Laberinto)
+
+```bash
+cd LaberintoVecinos
+uv run python scripts/capture_readme_screenshots.py
+```
+
+---
+
 ## Requisitos comunes
 
 - [uv](https://docs.astral.sh/uv/)
-- Python **3.11+** en cada subcarpeta del proyecto (`Sorting_race`, `Hormigas`).
+- Python **3.11+** en cada subcarpeta del proyecto (`Sorting_race`, `Hormigas`, `LaberintoVecinos`).
