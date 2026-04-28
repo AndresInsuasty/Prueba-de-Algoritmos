@@ -20,7 +20,7 @@ from sorting_race.config import (
     COLOR_BG,
     HUD_HEIGHT,
 )
-from sorting_race.draw import draw_hud, draw_quadrant
+from sorting_race.draw import build_hud_layout, draw_hud, draw_quadrant, hit_test_hud
 from sorting_race.models import GamePhase, SortStep
 from sorting_race.sorts import ALGORITHMS
 
@@ -94,6 +94,13 @@ class Game:
         self.n = N_PRESETS[self._preset_idx]
         self._new_permutation()
 
+    def select_n_value(self, n: int) -> None:
+        if n not in N_PRESETS:
+            return
+        self._preset_idx = N_PRESETS.index(n)
+        self.n = n
+        self._new_permutation()
+
     def adjust_steps(self, delta: int) -> None:
         self.steps_per_frame = max(MIN_STEPS, min(MAX_STEPS, self.steps_per_frame + delta))
 
@@ -151,6 +158,7 @@ def main() -> None:
 
     running = True
     while running:
+        layout = build_hud_layout(screen.get_width())
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -176,7 +184,22 @@ def main() -> None:
                     if game.phase == GamePhase.BETTING:
                         game.bet_index = event.key - pygame.K_1
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                if game.phase == GamePhase.BETTING:
+                hud_hit = hit_test_hud(layout, event.pos)
+                if hud_hit is not None:
+                    if hud_hit.startswith("n:") and game.phase != GamePhase.RACING:
+                        game.select_n_value(int(hud_hit.split(":", 1)[1]))
+                    elif hud_hit == "steps_minus":
+                        game.adjust_steps(-1)
+                    elif hud_hit == "steps_plus":
+                        game.adjust_steps(1)
+                    elif hud_hit == "shuffle" and game.phase != GamePhase.RACING:
+                        game._new_permutation()
+                    elif hud_hit == "primary":
+                        if game.phase == GamePhase.BETTING:
+                            game.start_race()
+                        elif game.phase == GamePhase.RESULT:
+                            game._new_permutation()
+                elif game.phase == GamePhase.BETTING:
                     hit = game.quadrant_at(event.pos, quads)
                     if hit is not None:
                         game.bet_index = hit
@@ -187,6 +210,7 @@ def main() -> None:
         screen.fill(COLOR_BG)
         draw_hud(
             screen,
+            layout,
             phase=game.phase,
             n=game.n,
             steps=game.steps_per_frame,
