@@ -1,10 +1,17 @@
 # Prueba-de-Algoritmos
 
-Repositorio de experimentos y demos de algoritmos.
+Repositorio de experimentos y demos de algoritmos en **Python**, con **Pygame** y gestión de entornos con **[uv](https://docs.astral.sh/uv/)**.
 
-## Sorting Race (carrera de ordenamientos)
+## Índice
 
-Demo en **Python** con **Pygame** y gestión de dependencias con **uv**: cuatro algoritmos (burbuja, inserción, quicksort y mergesort) compiten ordenando la misma permutación inicial; podés apostar cuál termina primero y ajustar tamaño y velocidad desde la interfaz.
+1. [Sorting Race: carrera de ordenamientos](#sorting-race-carrera-de-ordenamientos)
+2. [Hormigas: feromonas y comida](#hormigas-feromonas-y-comida)
+
+---
+
+## Sorting Race: carrera de ordenamientos
+
+Cuatro algoritmos (burbuja, inserción, quicksort y mergesort) compiten ordenando la **misma** permutación inicial; podés apostar cuál termina primero y ajustar tamaño y velocidad desde la interfaz (botones y teclado).
 
 ### Requisitos
 
@@ -13,18 +20,15 @@ Demo en **Python** con **Pygame** y gestión de dependencias con **uv**: cuatro 
 
 ### Cómo ejecutar
 
-Desde la raíz del repositorio:
-
 ```bash
 cd Sorting_race
 uv sync
 uv run sorting-race
 ```
 
-Alternativas equivalentes:
+Alternativa:
 
 ```bash
-cd Sorting_race
 uv run python -m sorting_race
 ```
 
@@ -34,10 +38,10 @@ Opciones de línea de comandos:
 uv run sorting-race --n 128 --seed 42
 ```
 
-- `--n`: cantidad de barras (entre 2 y 512; también se puede cambiar con los botones del HUD).
+- `--n`: cantidad de barras (entre 2 y 512; también con botones del HUD).
 - `--seed`: semilla para repetir la misma permutación en otra máquina o clase.
 
-### Controles rápidos
+### Controles rápidos (Sorting Race)
 
 | Acción | Teclado / interfaz |
 |--------|---------------------|
@@ -48,7 +52,7 @@ uv run sorting-race --n 128 --seed 42
 | Velocidad (pasos por frame) | **+** / **−** o botones **+** / **−** |
 | Salir | **ESC** |
 
-### Capturas de pantalla
+### Capturas (Sorting Race)
 
 **Fase de apuesta** — mismos datos en los cuatro cuadrantes; apuesta opcional (ejemplo: Quick seleccionado).
 
@@ -62,9 +66,7 @@ uv run sorting-race --n 128 --seed 42
 
 ![Resultado y ganador](docs/sorting_race/03-resultado.png)
 
-### Regenerar las capturas del README
-
-Si cambiás la interfaz y querés volver a generar los PNG en `docs/sorting_race/`:
+### Regenerar capturas (Sorting Race)
 
 ```bash
 cd Sorting_race
@@ -73,12 +75,76 @@ uv run python scripts/capture_readme_screenshots.py
 
 Usa el driver de vídeo `dummy` de SDL y no abre ventana.
 
-## Hormigas (feromonas y comida)
+---
 
-Demo **bioinspirada** en Pygame: colonia que busca comida, feromonas con evaporación, muros y comida editables con el ratón en tiempo real. Ver [Hormigas/README.md](Hormigas/README.md).
+## Hormigas: feromonas y comida
+
+Demo **bioinspirada** (idea de colonias de hormigas / ACO didáctico): muchas hormigas buscan comida en una grilla, depositan **feromonas** al volver al nido y las feromonas **se evaporan**. Podés pintar **muros** (azules), añadir **comida** (verde), ajustar **parámetros** en el panel y **iniciar o pausar** la simulación cuando quieras.
+
+Documentación detallada: [Hormigas/README.md](Hormigas/README.md).
+
+### Idea y parámetros (resumen)
+
+| Parámetro | Rol breve |
+|-----------|------------|
+| **ρ (rho)** | Evaporación: cuánto “se borra” la feromona por frame (más alto → se olvidan antes los viejos caminos). |
+| **α (alpha)** | Sensibilidad a feromonas al forrajear (más alto → más tendencia a seguir rastros). |
+| **Q** | Cuánta feromona se deposita al volver con comida (más alto → refuerzo más fuerte del camino). |
+| **Velocidad** | Pasos de simulación por fotograma (solo ritmo visual, no es biología). |
+| **Cantidad de hormigas** | Más agentes → más exploración y refuerzo en paralelo. |
+
+Al abrir el juego la simulación arranca **en pausa**: configurá, dibujá el escenario y pulsá **Iniciar**.
+
+### Cómo ejecutar (Hormigas)
 
 ```bash
 cd Hormigas
 uv sync
 uv run hormigas
 ```
+
+Opciones:
+
+```bash
+uv run hormigas --ants 48 --seed 7
+```
+
+### Controles rápidos (Hormigas)
+
+| Acción | Dónde |
+|--------|--------|
+| Iniciar / Pausar | Botón o **SPACE** |
+| Reiniciar escenario | Botón o **R** |
+| Ajustar ρ, α, Q, velocidad, hormigas | Botones **− / +** del HUD (ρ, α, Q y hormigas solo en **pausa**; la velocidad también en marcha) |
+| Muros / comida | Botones **Muros** / **Comida** + ratón en la grilla |
+| Ver u ocultar feromonas | Botón o **P** |
+| Limpiar feromonas | Botón o **C** |
+| Salir | **ESC** |
+
+### Capturas (Hormigas)
+
+**Pausa y panel** — simulación detenida, parámetros visibles y ejemplo de muros azules.
+
+![Pausa y panel de Hormigas](docs/hormigas/01-pausa-y-panel.png)
+
+**Simulación con feromonas** — tras unos segundos de actividad, se aprecian los rastros (violeta) y las hormigas.
+
+![Hormigas y feromonas](docs/hormigas/02-simulacion-feromonas.png)
+
+**Muros y comida** — modo comida y obstáculos para discutir recálculo de rutas en clase.
+
+![Muros y comida](docs/hormigas/03-muros-y-comida.png)
+
+### Regenerar capturas (Hormigas)
+
+```bash
+cd Hormigas
+uv run python scripts/capture_readme_screenshots.py
+```
+
+---
+
+## Requisitos comunes
+
+- [uv](https://docs.astral.sh/uv/)
+- Python **3.11+** en cada subcarpeta del proyecto (`Sorting_race`, `Hormigas`).

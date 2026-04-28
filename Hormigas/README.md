@@ -54,3 +54,14 @@ Sirve para hablar de **heurística**, **estigmergia** (indirecta vía el medio),
 - `ants.py` — lógica de cada hormiga.
 - `main.py` — bucle Pygame, ratón y teclado.
 - `draw.py` — renderizado.
+
+## Capturas para el README del repo
+
+Para volver a generar los PNG que usa el README raíz en `docs/hormigas/`:
+
+```bash
+cd Hormigas
+uv run python scripts/capture_readme_screenshots.py
+```
+
+Usa `SDL_VIDEODRIVER=dummy` (no abre ventana).
