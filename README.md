@@ -72,3 +72,13 @@ uv run python scripts/capture_readme_screenshots.py
 ```
 
 Usa el driver de vídeo `dummy` de SDL y no abre ventana.
+
+## Hormigas (feromonas y comida)
+
+Demo **bioinspirada** en Pygame: colonia que busca comida, feromonas con evaporación, muros y comida editables con el ratón en tiempo real. Ver [Hormigas/README.md](Hormigas/README.md).
+
+```bash
+cd Hormigas
+uv sync
+uv run hormigas
+```

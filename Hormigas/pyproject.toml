@@ -1,0 +1,19 @@
+[project]
+name = "hormigas"
+version = "0.1.0"
+description = "Demo Pygame: colonia de hormigas, feromonas, muros y comida en tiempo real (aula)."
+readme = "README.md"
+authors = [
+    { name = "andres-insuasty-itti", email = "german.insuasty@itti.digital" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "pygame>=2.6.1",
+]
+
+[project.scripts]
+hormigas = "hormigas.main:main"
+
+[build-system]
+requires = ["uv_build>=0.9.18,<0.10.0"]
+build-backend = "uv_build"
